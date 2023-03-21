@@ -5,6 +5,12 @@ terraform {
       version = "3.47.0"
     }
   }
+   backend "azurerm" {
+        resource_group_name  = "shriram-poc"
+        storage_account_name = "shriramtfpoc"
+        container_name       = "tfstate"
+        key                  = "terraform.tfstate"
+    }
 }
 
 provider "azurerm" {
