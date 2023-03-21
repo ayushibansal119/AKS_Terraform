@@ -34,3 +34,11 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform -chdir="./terraform_AKS" init -input=false
+      
+    - name: Azure Login
+      uses: Azure/login@v1
+    - run: |
+        az login
+        
+       
+
