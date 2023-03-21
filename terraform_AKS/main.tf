@@ -15,12 +15,13 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "681aee13-0dd9-473f-9c12-3639af82485a"
+  subscription_id = "052c9332-2138-411f-adef-e7445d02ecc6"
 }
 
 #local variables
 locals {
-  resource_group_name  = "DC-ShriramONE-C-IND"
+  resource_group_name  = "shriram-poc"
+  resource_group_location = "Central India"
   virtual_network_name = "Vnet-NTS-SUPERAPP-ShriramONE"
   subnet_name          = "subnet-aks-ci-prod-shriramone"
   aks_cluster_name     = "aks_shriramone_prod"
@@ -29,22 +30,23 @@ locals {
 }
 
 # reading resource group
-data "azurerm_resource_group" "prod_rg" {
+resource "azurerm_resource_group" "prod_rg" {
   name = local.resource_group_name
+  location = local.resource_group_location
 }
 
 # reading virtual network
-data "azurerm_virtual_network" "vnet-prod" {
-  name                = local.virtual_network_name
-  resource_group_name = data.azurerm_resource_group.prod_rg.name
-}
+# data "azurerm_virtual_network" "vnet-prod" {
+#   name                = local.virtual_network_name
+#   resource_group_name = data.azurerm_resource_group.prod_rg.name
+# }
 
-# reading subnet
-data "azurerm_subnet" "aks_subnet_prod" {
-  name                 = local.subnet_name
-  virtual_network_name = data.azurerm_virtual_network.vnet-prod.name
-  resource_group_name  = data.azurerm_resource_group.prod_rg.name
-}
+# # reading subnet
+# data "azurerm_subnet" "aks_subnet_prod" {
+#   name                 = local.subnet_name
+#   virtual_network_name = data.azurerm_virtual_network.vnet-prod.name
+#   resource_group_name  = data.azurerm_resource_group.prod_rg.name
+# }
 
 # resource "azurerm_route_table" "rt_prod" {
 #   name                = "rt-${local.Environment}"
@@ -61,16 +63,16 @@ data "azurerm_subnet" "aks_subnet_prod" {
 resource "azurerm_kubernetes_cluster" "prod_aks" {
   name                    = local.aks_cluster_name
   location                = var.prod_rg_location
-  resource_group_name     = data.azurerm_resource_group.prod_rg.name
+  resource_group_name     = azurerm_resource_group.prod_rg.name
   private_cluster_enabled = true
   dns_prefix              = "aksprod"
 
 
   default_node_pool {
     name           = "systempool"
-    node_count     = 3
+    node_count     = 1
     vm_size        = local.vm_size_systempool
-    vnet_subnet_id = data.azurerm_subnet.aks_subnet_prod.id
+    # vnet_subnet_id = data.azurerm_subnet.aks_subnet_prod.id
     node_labels = {
       "type" = "system"
     }
@@ -101,7 +103,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "prod_userpool01" {
   name                  = "apppool"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.prod_aks.id
   vm_size               = local.vm_size_userpool
-  node_count            = 3
+  node_count            = 1
   enable_auto_scaling   = true
   max_count             = 6
   node_labels = {
