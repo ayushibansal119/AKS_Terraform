@@ -1,4 +1,4 @@
-name: 'Terraforms'
+name: 'Terraform'
  
 on:
   push:
@@ -7,9 +7,9 @@ on:
   pull_request:
  
 jobs:
-  my_job:
+  terraform:
     name: dev
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     environment: production
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
@@ -21,13 +21,11 @@ jobs:
         shell: bash
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-    - name: 'Terraform version'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: 1.3.9
-        tf_actions_subcommand: 'version'
-        tf_actions_working_dir: "./terraform_AKS"
+      uses: actions/checkout@v3
+     
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
       
       
       
