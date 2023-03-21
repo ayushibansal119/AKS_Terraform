@@ -27,6 +27,7 @@ jobs:
     - name: Terraform Format
       id: fmt
       run: terraform fmt -check
+    - run: cd terraform_AKS
      
     - name: Terraform Init
       id: init
