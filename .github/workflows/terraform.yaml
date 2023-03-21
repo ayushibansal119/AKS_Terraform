@@ -1,3 +1,4 @@
+
 name: 'Terraform'
  
 on:
@@ -32,8 +33,4 @@ jobs:
       
     - name: Terraform Init
       id: init
-      run: terraform init
-      
-      
-      
-      
+      run: terraform -chdir="./terraform_AKS" init -input=false
