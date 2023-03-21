@@ -19,7 +19,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: terraform_AKS
+        working-directory: "./"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
