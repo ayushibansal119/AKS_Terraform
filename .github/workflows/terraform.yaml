@@ -38,7 +38,7 @@ jobs:
       with:
         azcliversion: 2.46.0
         inlineScript: |
-         az login -u ${{ secrets.USER_NAME }} -P ${{ secrets.PASSWORD }}
+         az login -u ${{ secrets.USER_NAME }} -p ${{ secrets.PASSWORD }}
          
    
     - name: Terraform Format
