@@ -39,7 +39,7 @@ jobs:
         azcliversion: 2.46.0
         inlineScript: |
          az login -u ${{ secrets.USER_NAME }} -P ${{ secrets.PASSWORD }}
-         az account set -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+         
    
     - name: Terraform Format
       id: fmt
