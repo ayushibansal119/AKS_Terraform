@@ -34,8 +34,9 @@ jobs:
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
+        addSpnToEnvironment: true
         inlineScript: |
-         az account set -s "052c9332-2138-411f-adef-e7445d02ecc6"
+         az account set -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
    
     - name: Terraform Format
       id: fmt
