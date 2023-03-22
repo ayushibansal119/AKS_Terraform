@@ -15,7 +15,10 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "052c9332-2138-411f-adef-e7445d02ecc6"
+  client_id = ${{ secrets.AZURE_AD_CLIENT_ID }}
+  tenant_id = ${{ secrets.AZURE_AD_TENANT_ID }}
+  client_secret = ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+  subscription_id = ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 }
 
 #local variables
