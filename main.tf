@@ -15,7 +15,7 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "052c9332-2138-411f-adef-e7445d02ecc6"
+#   subscription_id = "cd80669d-c886-455a-b108-8299fac678e3"
 }
 
 #local variables
@@ -29,7 +29,7 @@ locals {
   vm_size_userpool        = "Standard_D8s_v5"
 }
 
-# reading resource group
+
 resource "azurerm_resource_group" "prod_rg" {
   name     = local.resource_group_name
   location = local.resource_group_location
@@ -60,81 +60,81 @@ resource "azurerm_resource_group" "prod_rg" {
 # }
 
 # creation of AKS private cluster
-resource "azurerm_kubernetes_cluster" "prod_aks" {
-  name                    = local.aks_cluster_name
-  location                = var.prod_rg_location
-  resource_group_name     = azurerm_resource_group.prod_rg.name
-  private_cluster_enabled = true
-  dns_prefix              = "aksprod"
+# resource "azurerm_kubernetes_cluster" "prod_aks" {
+#   name                    = local.aks_cluster_name
+#   location                = var.prod_rg_location
+#   resource_group_name     = azurerm_resource_group.prod_rg.name
+#   private_cluster_enabled = true
+#   dns_prefix              = "aksprod"
 
 
-  default_node_pool {
-    name       = "systempool"
-    node_count = 1
-    vm_size    = local.vm_size_systempool
-    # vnet_subnet_id = data.azurerm_subnet.aks_subnet_prod.id
-    node_labels = {
-      "type" = "system"
-    }
-  }
+#   default_node_pool {
+#     name       = "systempool"
+#     node_count = 1
+#     vm_size    = local.vm_size_systempool
+#     # vnet_subnet_id = data.azurerm_subnet.aks_subnet_prod.id
+#     node_labels = {
+#       "type" = "system"
+#     }
+#   }
 
-  identity {
-    type = "SystemAssigned"
-  }
+#   identity {
+#     type = "SystemAssigned"
+#   }
 
-  network_profile {
-    network_plugin = "azure"
-    outbound_type  = "userDefinedRouting"
-  }
-  #  depends_on = [
-  #     azurerm_route.rt_prod
-  #   ]
-  tags = {
-    Environment = var.Environment
-  }
-  # depends_on = [
-  #   "DC-ShriramONE-C-IND"
-  # ]
-}
+#   network_profile {
+#     network_plugin = "azure"
+#     outbound_type  = "userDefinedRouting"
+#   }
+#   #  depends_on = [
+#   #     azurerm_route.rt_prod
+#   #   ]
+#   tags = {
+#     Environment = var.Environment
+#   }
+#   # depends_on = [
+#   #   "DC-ShriramONE-C-IND"
+#   # ]
+# }
 
 
-# adding nodepool
-resource "azurerm_kubernetes_cluster_node_pool" "prod_userpool01" {
-  name                  = "apppool"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.prod_aks.id
-  vm_size               = local.vm_size_userpool
-  node_count            = 1
-  enable_auto_scaling   = true
-  max_count             = 6
-  node_labels = {
-    type = "application"
-  }
+# # adding nodepool
+# resource "azurerm_kubernetes_cluster_node_pool" "prod_userpool01" {
+#   name                  = "apppool"
+#   kubernetes_cluster_id = azurerm_kubernetes_cluster.prod_aks.id
+#   vm_size               = local.vm_size_userpool
+#   node_count            = 1
+#   enable_auto_scaling   = true
+#   max_count             = 6
+#   node_labels = {
+#     type = "application"
+#   }
 
-  tags = {
-    Environment = var.Environment
-  }
-}
+#   tags = {
+#     Environment = var.Environment
+#   }
+# }
 
-# adding additional nodepool
-resource "azurerm_kubernetes_cluster_node_pool" "prod_userpool02" {
-  name                  = "rabbitmqpool"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.prod_aks.id
-  vm_size               = local.vm_size_userpool
-  node_count            = 1
-  enable_auto_scaling   = true
-  max_count             = 2
-  node_labels = {
-    type = "rabbitmq"
-  }
+# # adding additional nodepool
+# resource "azurerm_kubernetes_cluster_node_pool" "prod_userpool02" {
+#   name                  = "rabbitmqpool"
+#   kubernetes_cluster_id = azurerm_kubernetes_cluster.prod_aks.id
+#   vm_size               = local.vm_size_userpool
+#   node_count            = 1
+#   enable_auto_scaling   = true
+#   max_count             = 2
+#   node_labels = {
+#     type = "rabbitmq"
+#   }
 
-  # depends_on = [
-  #   azurerm_resource_group.shriram_prod
-  # ]
+#   # depends_on = [
+#   #   azurerm_resource_group.shriram_prod
+#   # ]
 
-  tags = {
-    Environment = var.Environment
-  }
-}
+#   tags = {
+#     Environment = var.Environment
+#   }
+# }
 
 
 
