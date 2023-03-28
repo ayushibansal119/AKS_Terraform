@@ -40,7 +40,7 @@ jobs:
       with:
           azcliversion: 2.46.0
           inlineScript: |
-           az login --tenant ${{ secrets.AZURE_AD_TENANT_ID }}
+           az login -u ${{ secrets.USER_NAME }} -u ${{ secrets.PASSWORD }} --tenant ${{ secrets.AZURE_AD_TENANT_ID }}
            az account set -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
