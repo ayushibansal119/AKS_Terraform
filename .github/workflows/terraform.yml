@@ -31,7 +31,7 @@ jobs:
       uses: actions/checkout@v3
       with:
        ref: dev-1
-       repository: AKS_Terraform/terraform_AKS/
+       repository: ayushib456/AKS_Terraform
        path: terraform_AKS/
        
     - name: Azure CLI script
