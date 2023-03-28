@@ -29,11 +29,6 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-      
-#     - name: Log in with Azure
-#       uses: Azure/login@v1.4.6
-#       with:
-#        creds: ${{ secrets.AZURE_CREDENTIALS }}
        
     - name: Azure CLI script
       uses: azure/CLI@v1
@@ -43,15 +38,9 @@ jobs:
            az login --use-device-code
            az account set --subscription "cd80669d-c886-455a-b108-8299fac678e3"
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-#     - name: Setup Terraform
-#       uses: hashicorp/setup-terraform@v1
-#       with:
-#         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform -chdir="./terraform_AKS" init -input=false
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
