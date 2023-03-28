@@ -41,7 +41,7 @@ jobs:
           azcliversion: 2.46.0
           inlineScript: |
            az login --use-device-code
-           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+           az account set --subscription "cd80669d-c886-455a-b108-8299fac678e3"
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
 #     - name: Setup Terraform
