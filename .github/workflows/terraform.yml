@@ -39,8 +39,8 @@ jobs:
       with:
           azcliversion: 2.46.0
           inlineScript: |
-           az login --use-device-code
-           az account set --subscription "cd80669d-c886-455a-b108-8299fac678e3"
+           sudo az login --use-device-code
+           sudo az account set --subscription "cd80669d-c886-455a-b108-8299fac678e3"
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
