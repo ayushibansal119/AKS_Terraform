@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "shriram-poc"
-    storage_account_name = "shriramtfpoc"
+    resource_group_name  = "aks-poc"
+    storage_account_name = "akstfpoc"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
@@ -23,11 +23,11 @@ provider "azurerm" {
 
 #local variables
 locals {
-  resource_group_name     = "shriram-poc"
+  resource_group_name     = "aks-poc"
   resource_group_location = "Central India"
-  virtual_network_name    = "Vnet-NTS-SUPERAPP-ShriramONE"
-  subnet_name             = "subnet-aks-ci-prod-shriramone"
-  aks_cluster_name        = "aks_shriramone_prod"
+  virtual_network_name    = "Vnet-NTS-SUPERAPP-aksONE"
+  subnet_name             = "subnet-aks-ci-prod-aksone"
+  aks_cluster_name        = "aks_aksone_prod"
   vm_size_systempool      = "Standard_D2_v3"
   vm_size_userpool        = "Standard_D8s_v5"
 }
@@ -96,7 +96,7 @@ resource "azurerm_resource_group" "prod_rg" {
 #     Environment = var.Environment
 #   }
 #   # depends_on = [
-#   #   "DC-ShriramONE-C-IND"
+#   #   "DC-aksONE-C-IND"
 #   # ]
 # }
 
@@ -131,7 +131,7 @@ resource "azurerm_resource_group" "prod_rg" {
 #   }
 
 #   # depends_on = [
-#   #   azurerm_resource_group.shriram_prod
+#   #   azurerm_resource_group.aks_prod
 #   # ]
 
 #   tags = {
