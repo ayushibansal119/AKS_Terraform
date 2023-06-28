@@ -10,10 +10,10 @@ terraform {
 provider "azurerm" {
   features {}
 
-  client_id       = "246cfd43-77c5-4c63-8f77-d6a19a3876ec"
-  client_secret   = "QMI8Q~tCFMcT85QTc1Kdn7hanAEj7nBCnpq3Vc7b"
-  tenant_id       = "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
-  subscription_id = "ee22c8f0-93df-4b47-925a-d337fef522fe"
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  subscription_id = var.subscription_id
 }
 resource "azurerm_resource_group" "rg" {
   name     = "rg-poc-ab-dev-001"
