@@ -17,6 +17,9 @@ subjects:
 - kind: User
   name: "ayushi.bansal@celebaltech.com"
   apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: "purushottam.sharma@celebaltech.com"
+  apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
   name: pod-reader
