@@ -7,11 +7,6 @@ metadata:
     app: frontend
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 33%
-      maxUnavailable: 33%%
   selector:
     matchLabels:
       app: frontend
